@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="screen">
+        <img src="background-img-src-holder" class="background-img-class-holder">
+        <div class="download-btn-class-holder">
+            <img onclick="sendCloseEvent()" class="download-img" src="download.png">
+        </div>
+        <img onclick="sendCloseEvent()" src="close.png" class="close-btn-class-holder">
+    </div>
+
+    <script>
+        function sendCloseEvent() {
+            try {
+                // android
+                window.android.closeLandPage();
+            } catch (e) {}
+
+            try {
+                webkit.messageHandlers.playable.postMessage('closeLandPage');
+            } catch (e) {}
+        }
+    </script>
+</body>
+
+</html>

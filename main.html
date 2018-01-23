@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="./assets/css/client-style.css">
+    <link rel="stylesheet" href="./assets/css/screen.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div style="position:absolute; padding:2vh">
+        <button id='import'>导入视频文件</button>
+        <button id="export">导出配制文件</button>
+        <br>
+        <h3>控制点说明：</h3>
+        <input type="checkbox" /> <span>左上</span>
+        <input type="checkbox" /> <span>上滑</span>
+        <input type="checkbox" /> <span>右上</span><br>
+        <input type="checkbox" /> <span>左滑</span>
+        <input type="checkbox" /> <span>点击</span>
+        <input type="checkbox" /> <span>右滑</span><br>
+        <input type="checkbox" /> <span>左下</span>
+        <input type="checkbox" /> <span>下滑</span>
+        <input type="checkbox" /> <span>右下</span>
+        <br> <br>
+        <button id="pre-play" style="margin:2vh 0, font-size=2em, padding=10px">预演</button> 
+        <br><br>
+        <button style="margin:2vh 0" onclick="refresh()">清空</button>
+    </div>
+
+    <div id="mobile-frame" class="mobile-frame-portrait">
+        <div id="mobile-screen-frame" class="mobile-screen-portrait-16-9">
+            <video id="my-video" class="player"></video>
+            <div class="rectangle-container"></div>
+            <div id="gesture-layer" style="display:none"><span id="log-text">log</span></div>
+        </div>
+    </div>
+    <div class="controller-container">
+        <div class="progress-bar"></div>
+    </div>
+
+    <script>
+        require('./renderer-process/native-ui/dialogs/open-file')
+        require('./renderer-process/renderer-main')
+        require('./renderer-process/client')
+
+        function refresh(){
+            location.reload();
+        }
+    </script>
+</body>
+
+</html>

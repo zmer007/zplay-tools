@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="main.js"></script>
+    <script src="zprf.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <audio id="my-audio" src="bgm-src-holder" autoplay loop></audio>
+    <div class="screen">
+        <!-- 说明：playsinline在iOS 10及以上使用，10以下用webkit-playsinline。表示使用webview内置播放器播放视频，而不是使用iOS自身的播放器播放视频。 -->
+        <video id="my-video" class="video-class-holder" src="video-src-holder" autoplay muted playsinline webkit-playsinline></video>
+        <div id="gesture-layer"></div>
+    </div>
+
+    <script>
+        function playGame() {
+            document.getElementById('my-video').play();
+            document.getElementById('my-audio').play();
+        }
+    </script>
+</body>
+
+</html>

@@ -1,14 +1,24 @@
 {
   "name": "zplay-tools",
+  "description": "A H5 generator.",
+  "repository": "https://github.com/zmer007/zplay-tools.git",
   "version": "0.1.0",
   "main": "main.js",
   "scripts": {
     "pack-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=assets/image/logo/mac.icns --prune=true --out=release-builds",
-    "pack-win": "electron-packager . zplay-tools --overwrite --asar=true --platform=win32 --arch=ia32 --icon=assets/image/logo/window.ico --prune=true --out=release-builds --version-string.CompanyName=ZA --version-string.FileDescription=ZA --version-string.ProductName='Zplay Tools'"
+    "pack-win": "electron-packager . zplay-tools --overwrite --asar=true --platform=win32 --arch=ia32 --icon=assets/image/logo/window.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName='Zplay Tools'",
+    "pack-linux": "electron-packager . zplay-tools --overwrite --asar=true --platform=linux --arch=x64 --icon=assets/image/logo/linux.png --prune=true --out=release-builds"
   },
   "devDependencies": {
     "electron": "^1.7.10",
     "electron-packager": "^10.1.1",
     "electron-winstaller": "^2.6.3"
-  }
+  },
+  "dependencies": {
+    "fs-extra": "^5.0.0",
+    "glob": "^7.1.0",
+    "highlight.js": "^9.3.0",
+    "jquery": "^3.2.1"
+  },
+  "license": "AGPL-3.0"
 }

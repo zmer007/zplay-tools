@@ -1,11 +1,16 @@
 const {app, BrowserWindow} = require('electron')
 const path = require('path')
+const glob = require('glob')
 const url = require('url')
 
 let win 
 
 function createWindow() {
-    win = new BrowserWindow({width: 800, height: 600})
+    win = new BrowserWindow({
+        width: 1080,
+        minWidth: 680,
+        height: 840,
+        title: app.getName()})
 
     win.loadURL(url.format({
         pathname: path.join(__dirname, 'index.html'),
@@ -18,6 +23,8 @@ function createWindow() {
     win.on('closed', () => {
         win = null
     })
+
+    loadDemos()
 }
 
 app.on('ready', createWindow)
@@ -34,3 +41,10 @@ app.on('activate', () => {
         createWindow()
     }
 })
+
+function loadDemos() {
+    var files = glob.sync(path.join(__dirname, 'main-process/**/*.js'))
+    files.forEach(function (file) {
+        require(file)
+    })
+}
