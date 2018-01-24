@@ -3,6 +3,7 @@ const dialog = require('electron').dialog
 const path = require('path')
 const fs = require('fs-extra');
 var meterialDir;
+var tmpFilePath;
 
 ipc.on('save-file', (event, data, videoPath) => {
     try {
@@ -19,6 +20,7 @@ ipc.on('save-file', (event, data, videoPath) => {
                 fs.mkdir(filename);
                 exportFiles(filename, data, videoPath);
                 event.sender.send('file-saved', filename);
+                fs.remove(tmpFilePath);
             }
         })
     } catch (e) {
@@ -65,10 +67,10 @@ ipc.on('open-file', (event) => {
         const options = {
             title: '选择可玩视频',
             properties: ['openFile'],
-            filters: [{
-                // name: 'Movies',
-                // extensions: ['mkv', 'avi', 'mp4']
-            }]
+            // filters: [{
+            //     name: 'Movies',
+            //     extensions: ['mkv', 'avi', 'mp4']
+            // }]
         }
         dialog.showOpenDialog(options, (filename) => {
             if (filename) {
@@ -83,7 +85,8 @@ ipc.on('open-file', (event) => {
 
 ipc.on('cache-file', (event, filename, data) => {
     if (filename && data) {
-        fs.writeFileSync(path.join(meterialDir, filename), JSON.stringify(data), 'utf-8');
+        tmpFilePath = path.join(meterialDir, filename)
+        fs.writeFileSync(tmpFilePath, JSON.stringify(data), 'utf-8');
         event.sender.send('file-cached', path.join(meterialDir, filename));
     }
 })

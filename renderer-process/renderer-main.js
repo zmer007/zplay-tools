@@ -95,7 +95,7 @@ $(() => {
 
 			$('#gesture-layer')[0].style.display = 'block';
 			var nm = getNormaledMarks();
-			ipc.send('cache-file', '.process.json', getNormaledMarks())
+			ipc.send('cache-file', '._.json', getNormaledMarks())
 		} else {
 			$('#pre-play').html('预演');
 			progressBar[0].style.display = 'block';
