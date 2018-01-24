@@ -6,7 +6,7 @@
   "main": "main.js",
   "scripts": {
     "pack-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=assets/image/logo/mac.icns --prune=true --out=release-builds",
-    "pack-win": "electron-packager . zplay-tools --overwrite --asar=true --platform=win32 --arch=ia32 --icon=assets/image/logo/window.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName='Zplay Tools'",
+    "pack-win": "electron-packager . zplay-tools --overwrite --platform=win32 --arch=ia32 --icon=assets/image/logo/window.ico --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName='Zplay Tools'",
     "pack-linux": "electron-packager . zplay-tools --overwrite --asar=true --platform=linux --arch=x64 --icon=assets/image/logo/linux.png --prune=true --out=release-builds"
   },
   "devDependencies": {

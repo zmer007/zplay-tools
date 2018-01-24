@@ -64,15 +64,17 @@ ipc.on('open-file', (event) => {
     try {
         const options = {
             title: '选择可玩视频',
-            properties: ['openFile', 'openDirectory'],
+            properties: ['openFile'],
             filters: [{
-                name: 'Movies',
-                extensions: ['mkv', 'avi', 'mp4']
+                // name: 'Movies',
+                // extensions: ['mkv', 'avi', 'mp4']
             }]
         }
         dialog.showOpenDialog(options, (filename) => {
-            event.sender.send('file-opend', filename);
-            meterialDir = path.dirname(filename[0])
+            if (filename) {
+                event.sender.send('file-opend', filename);
+                meterialDir = path.dirname(filename[0])
+            }
         })
     } catch (e) {
         event.sender.send('file-opend');
