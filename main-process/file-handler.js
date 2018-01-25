@@ -50,7 +50,7 @@ function exportFiles(outputDir, profileData, videoPath) {
     landpageFile = landpageFile.replace('close-btn-class-holder', isPortrait ? 'portrait-close' : 'landscape-close')
 
     fs.writeFileSync(outputDir + '/playable.html', playpageFile, 'utf-8');
-    fs.writeFileSync(outputDir + '/playable-landpage.html', landpageFile, 'utf-8');
+    fs.writeFileSync(outputDir + '/playable-landing.html', landpageFile, 'utf-8');
     fs.writeFileSync(outputDir + '/zprf.js', profileData, 'utf-8');
 
     fs.copySync(path.resolve(__dirname, '../assets/client-material/close.png'), outputDir + '/close.png');
