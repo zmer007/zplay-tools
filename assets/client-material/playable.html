@@ -20,9 +20,30 @@
     </div>
 
     <script>
-        function playGame() {
-            document.getElementById('my-video').play();
-            document.getElementById('my-audio').play();
+        function startAd() {
+            var video = document.getElementById('my-video');
+            video.currentTime = 0;
+            video.play();
+
+            var audio = document.getElementById('my-audio');
+            audio.currentTime = 0;
+            audio.play();
+        }
+
+        function pauseVideoAudio() {
+            var video = document.getElementById('my-video');
+            var audio = document.getElementById('my-audio');
+
+            video.pause();
+            audio.pause();
+        }
+
+        function resumeVideoAudio() {
+            var video = document.getElementById('my-video');
+            var audio = document.getElementById('my-audio');
+
+            video.play();
+            audio.play();
         }
     </script>
 </body>

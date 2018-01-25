@@ -13,7 +13,7 @@
     <div class="screen">
         <img src="background-img-src-holder" class="background-img-class-holder">
         <div class="download-btn-class-holder">
-            <img onclick="sendCloseEvent()" class="download-img" src="download.png">
+            <img onclick="sendInstallEvent()" class="download-img" src="download.png">
         </div>
         <img onclick="sendCloseEvent()" src="close.png" class="close-btn-class-holder">
     </div>
@@ -22,7 +22,18 @@
         function sendCloseEvent() {
             try {
                 // android
-                window.android.closeLandPage();
+                window.PlayableAds.closeWebView();
+            } catch (e) {}
+
+            try {
+                webkit.messageHandlers.playable.postMessage('closeLandPage');
+            } catch (e) {}
+        }
+
+        function sendInstallEvent() {
+            try {
+                // android
+                window.PlayableAds.goInstallApp();
             } catch (e) {}
 
             try {

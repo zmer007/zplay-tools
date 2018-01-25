@@ -38,7 +38,7 @@ function exportFiles(outputDir, profileData, videoPath) {
     const playName = 'play.mp4';
 
     var playpageFile = fs.readFileSync(path.resolve(__dirname, '../assets/client-material/playable.html'), 'utf-8');
-    var landpageFile = fs.readFileSync(path.resolve(__dirname, '../assets/client-material/playable-landpage.html'), 'utf-8');
+    var landpageFile = fs.readFileSync(path.resolve(__dirname, '../assets/client-material/playable-landing.html'), 'utf-8');
 
     playpageFile = playpageFile.replace('bgm-src-holder', bgmName);
     playpageFile = playpageFile.replace('video-class-holder', isPortrait ? 'portrait-video' : 'landscape-video')

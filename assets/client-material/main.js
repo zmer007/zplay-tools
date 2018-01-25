@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
         try{
             // Android
-            window.android.startVideo();
+            window.android.mediationStart();
         } catch (e) {
             // 在个别机型使用如下方式打印日志会使程序崩溃，如vivo X520L(Android 4.4.2)机型。
             // console.log(`The client hasn't "android.startVideo()" function`);
@@ -78,7 +78,7 @@ refreshFrame();
 
 function refreshFrame() {
     if(video && video.ended){
-        window.location.replace('playable-landpage.html');
+        window.PlayableAds.mediationEnd();
         return;
     }
     requestAnimationFrame(refreshFrame);
