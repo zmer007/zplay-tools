@@ -26,7 +26,7 @@
             } catch (e) {}
 
             try {
-                webkit.messageHandlers.playable.postMessage('closeLandPage');
+                window.webkit.messageHandlers.landingPage.postMessage("close");
             } catch (e) {}
         }
 
@@ -37,7 +37,7 @@
             } catch (e) {}
 
             try {
-                webkit.messageHandlers.playable.postMessage('closeLandPage');
+                window.webkit.messageHandlers.landingPage.postMessage("click");
             } catch (e) {}
         }
     </script>
