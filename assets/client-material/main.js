@@ -37,32 +37,31 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
         restoreData(window.screen.width, window.screen.height, data.videoDuration)
 
-        try {
+        if ("undefined" != typeof webkit) {
             // iOS
             webkit.messageHandlers.video.postMessage('video_did_start_playing');
-        }catch(e){
-            // 在个别机型使用如下方式打印日志会使程序崩溃，如vivo X520L(Android 4.4.2)机型。
-            // console.log(`The client hasn't "playable.readyToPlay" event.`);
-        }
-
-        try{
+        } else {
             // Android
             window.android.mediationStart();
-        } catch (e) {
-            // 在个别机型使用如下方式打印日志会使程序崩溃，如vivo X520L(Android 4.4.2)机型。
-            // console.log(`The client hasn't "android.startVideo()" function`);
         }
     })
 
-    video.addEventListener("canplay", function(){
-        try {
+    video.oncanplay = function () {
+        log('canplay');
+        if ("undefined" != typeof webkit) {
             // iOS
             webkit.messageHandlers.video.postMessage('video_did_end_loading');
-        }catch(e){
-            // 在个别机型使用如下方式打印日志会使程序崩溃，如vivo X520L(Android 4.4.2)机型。
-            // console.log(`The client hasn't "playable.readyToPlay" event.`);
         }
-    })
+    };
+
+    video.onended = function () {
+        if ("undefined" != typeof webkit) {
+            webkit.messageHandlers.video.postMessage('video_did_end_playing');
+            pauseVideoAudio();
+        } else {
+            window.PlayableAds.mediationEnd();
+        }
+    }
 });
 
 function restoreData(screenWidth, screenHeight, videoDuration) {
@@ -87,16 +86,6 @@ function restoreData(screenWidth, screenHeight, videoDuration) {
 refreshFrame();
 
 function refreshFrame() {
-    if(video && video.ended){
-        try{
-            window.PlayableAds.mediationEnd();
-        }catch(e){}
-
-        try {
-            window.webkit.messageHandlers.video.postMessage("video_did_end_playing");
-        }catch(e){}
-        return;
-    }
     requestAnimationFrame(refreshFrame);
 
     if (!video || !guides) return;
@@ -236,6 +225,32 @@ function onTouchEnd(e) {
 function resetDwonXY() {
     downX = null;
     downY = null;
+}
+
+function startAd() {
+    var video = document.getElementById('my-video');
+    video.currentTime = 0;
+    video.play();
+
+    var audio = document.getElementById('my-audio');
+    audio.currentTime = 0;
+    audio.play();
+}
+
+function pauseVideoAudio() {
+    var video = document.getElementById('my-video');
+    var audio = document.getElementById('my-audio');
+
+    video.pause();
+    audio.pause();
+}
+
+function resumeVideoAudio() {
+    var video = document.getElementById('my-video');
+    var audio = document.getElementById('my-audio');
+
+    video.play();
+    audio.play();
 }
 
 function log(msg) {

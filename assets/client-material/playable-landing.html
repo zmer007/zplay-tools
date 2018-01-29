@@ -20,25 +20,23 @@
 
     <script>
         function sendCloseEvent() {
-            try {
-                // android
-                window.PlayableAds.closeWebView();
-            } catch (e) {}
-
-            try {
+            if ("undefined" != typeof webkit) {
+                // iOS
                 window.webkit.messageHandlers.landingPage.postMessage("close");
-            } catch (e) {}
+            } else {
+                // Android
+                window.PlayableAds.closeWebView();
+            }
         }
 
         function sendInstallEvent() {
-            try {
-                // android
-                window.PlayableAds.goInstallApp();
-            } catch (e) {}
-
-            try {
+            if ("undefined" != typeof webkit) {
+                // iOS
                 window.webkit.messageHandlers.landingPage.postMessage("click");
-            } catch (e) {}
+            } else {
+                // Android
+                window.PlayableAds.goInstallApp();
+            }
         }
     </script>
 </body>

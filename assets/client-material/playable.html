@@ -16,34 +16,6 @@
         <video id="my-video" class="video-class-holder" src="video-src-holder" muted playsinline webkit-playsinline></video>
         <div id="gesture-layer"></div>
     </div>
-
-    <script>
-        function startAd() {
-            var video = document.getElementById('my-video');
-            video.currentTime = 0;
-            video.play();
-
-            var audio = document.getElementById('my-audio');
-            audio.currentTime = 0;
-            audio.play();
-        }
-
-        function pauseVideoAudio() {
-            var video = document.getElementById('my-video');
-            var audio = document.getElementById('my-audio');
-
-            video.pause();
-            audio.pause();
-        }
-
-        function resumeVideoAudio() {
-            var video = document.getElementById('my-video');
-            var audio = document.getElementById('my-audio');
-
-            video.play();
-            audio.play();
-        }
-    </script>
 </body>
 
 </html>
