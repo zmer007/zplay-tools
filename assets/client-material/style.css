@@ -84,6 +84,39 @@
   right: 2vmin;
 }
 
+div#landscape-ad[class='portrait'] {
+  width: 100vw;
+  height: 100vh;
+  background: red;
+}
+
+div#landscape-ad[class='landscape-left'] {
+  width: 100vh;
+  height: 100vw;
+  -webkit-transform-origin: top left;
+  transform-origin: top left;
+  margin-left: 100vw;
+  -webkit-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+
+div#landscape-ad[class='landscape-right'] {
+  width: 100vh;
+  height: 100vw;
+  -webkit-transform-origin: top left;
+  transform-origin: top left;
+  margin-top: 100vh;
+  -webkit-transform: rotate(-90deg);
+  transform: rotate(-90deg);
+}
+
+div#landscape-ad[class='upside-down'] {
+  width: 100vw;
+  height: 100vh;
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+
 @keyframes scale-animal {
   0% {
     transform: scale(1);

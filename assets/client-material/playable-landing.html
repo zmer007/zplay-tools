@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <div class="screen">
+    <div id="landscape-ad" class="screen">
         <img src="background-img-src-holder" class="background-img-class-holder">
         <div class="download-btn-class-holder">
             <img onclick="sendInstallEvent()" class="download-img" src="download.png">
@@ -19,6 +19,20 @@
     </div>
 
     <script>
+        function onCurrentOrientation(orientation) {
+            document.getElementById('info').innerHTML = "orientation: " + orientation;
+            var e = document.getElementById('landscape-ad');
+            if (orientation == 'PortraitUpsideDown') {
+                e.setAttribute("class", "upside-down");
+            } else if (orientation == 'LandscapeLeft') {
+                e.setAttribute("class", "landscape-left");
+            } else if (orientation == 'LandscapeRight') {
+                e.setAttribute("class", "landscape-right");
+            } else {
+                e.setAttribute("class", "portrait");
+            }
+        }
+
         function sendCloseEvent() {
             if ("undefined" != typeof webkit) {
                 // iOS
