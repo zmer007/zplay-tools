@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <div id="portrait-ad" class="screen">
+    <div id="ad-style-holder">
         <img src="background-img-src-holder" class="background-img-class-holder">
         <div class="download-btn-class-holder">
             <img onclick="sendInstallEvent()" class="download-img" src="download.png">
@@ -20,7 +20,7 @@
 
     <script>
         function onCurrentOrientation(orientation) {
-            var e = document.getElementById('portrait-ad');
+            var e = document.getElementById('ad-style-holder');
             if (orientation == 'PortraitUpsideDown') {
                 e.setAttribute("class", "upside-down");
             } else if (orientation == 'LandscapeLeft') {

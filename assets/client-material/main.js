@@ -66,11 +66,22 @@ document.addEventListener("DOMContentLoaded", function (event) {
 });
 
 function restoreData(screenWidth, screenHeight, videoDuration) {
-    if (videoDuration == Infinity) {
-        return;
+    if (videoDuration == Infinity || !guides) return;
+
+    if (myOrien == 'p' || myOrien == 'ud') {
+        if (screenWidth > screenHeight) {
+            var swape = screenHeight;
+            screenHeight = screenWidth;
+            screenWidth = swape;
+        }
+    } else {
+        if (screenWidth < screenHeight) {
+            var swape = screenHeight;
+            screenHeight = screenWidth;
+            screenWidth = swape;
+        }
     }
 
-    if (!guides) return;
     for (var i = 0; i < guides.length; i++) {
         var csr = guides[i];
         csr.span.start *= videoDuration;
@@ -288,7 +299,7 @@ function resumeVideoAudio() {
 
 function onCurrentOrientation(orientation) {
     log(orientation);
-    var e = document.getElementById('portrait-ad');
+    var e = document.getElementById('ad-style-holder');
     if (orientation == 'PortraitUpsideDown') {
         myOrien = 'ud';
         e.setAttribute("class", "upside-down");

@@ -39,24 +39,30 @@ function exportFiles(outputDir, profileData, videoPath) {
 
     var playpageFile = fs.readFileSync(path.resolve(__dirname, '../assets/client-material/playable.html'), 'utf-8');
     var landpageFile = fs.readFileSync(path.resolve(__dirname, '../assets/client-material/playable-landing.html'), 'utf-8');
+    var mainJsFile = fs.readFileSync(path.resolve(__dirname, '../assets/client-material/main.js'), 'utf-8');
 
+    playpageFile = playpageFile.replace('ad-style-holder', isPortrait ? 'portrait-ad' : 'landscape-ad');
     playpageFile = playpageFile.replace('bgm-src-holder', bgmName);
     playpageFile = playpageFile.replace('video-class-holder', isPortrait ? 'portrait-video' : 'landscape-video')
     playpageFile = playpageFile.replace('video-src-holder', playName)
 
+    landpageFile = landpageFile.replace(/ad-style-holder/g, isPortrait ? 'portrait-ad' : 'landscape-ad');
     landpageFile = landpageFile.replace('background-img-src-holder', posterName)
     landpageFile = landpageFile.replace('background-img-class-holder', isPortrait ? 'portrait-video' : 'landscape-video')
     landpageFile = landpageFile.replace('download-btn-class-holder', isPortrait ? 'portrait-download' : 'landscape-download')
     landpageFile = landpageFile.replace('close-btn-class-holder', isPortrait ? 'portrait-close' : 'landscape-close')
 
+    mainJsFile = mainJsFile.replace(/ad-style-holder/g, isPortrait ? 'portrait-ad' : 'landscape-ad');
+
     fs.writeFileSync(outputDir + '/playable.html', playpageFile, 'utf-8');
     fs.writeFileSync(outputDir + '/playable-landing.html', landpageFile, 'utf-8');
     fs.writeFileSync(outputDir + '/zprf.js', profileData, 'utf-8');
+    fs.writeFileSync(outputDir + '/main.js', mainJsFile, 'utf-8');
 
     fs.copySync(path.resolve(__dirname, '../assets/client-material/close.png'), outputDir + '/close.png');
     fs.copySync(path.resolve(__dirname, '../assets/client-material/download.png'), outputDir + '/download.png');
-    fs.copySync(path.resolve(__dirname, '../assets/client-material/main.js'), outputDir + '/main.js');
     fs.copySync(path.resolve(__dirname, '../assets/client-material/style.css'), outputDir + '/style.css');
+    
     fs.copySync(videoDir + '/' + videoName + '.mp4', outputDir + '/' + playName)
     fs.copySync(videoDir + '/' + videoName + '.mp3', outputDir + '/' + bgmName)
     fs.copySync(videoDir + '/' + videoName + '.jpg', outputDir + '/' + posterName)
@@ -67,10 +73,6 @@ ipc.on('open-file', (event) => {
         const options = {
             title: '选择可玩视频',
             properties: ['openFile'],
-            // filters: [{
-            //     name: 'Movies',
-            //     extensions: ['mkv', 'avi', 'mp4']
-            // }]
         }
         dialog.showOpenDialog(options, (filename) => {
             if (filename) {
