@@ -9,6 +9,7 @@ var cursor = null;
 var actionAble = false;
 
 var infoText = null;
+var myOrien = null;
 
 document.addEventListener("DOMContentLoaded", function (event) {
 
@@ -29,9 +30,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
         // 不全用durationchange监听方法，因为在Android 4.4（vivo）手机上会执行两次，第一次video duration为100，第二次正常值。
         // 为避免以后出现类似的问题，使用loadstart监听，并在配置文件中携带videoDuration值。
         guides = data.ctrl;
-        if (data.screenOrientation == 'landscape'){
+        if (data.screenOrientation == 'landscape') {
             video.className = 'landscape-video';
-        }else {
+        } else {
             video.className = 'portrait-video';
         }
 
@@ -182,18 +183,50 @@ function onMove(e) {
 
     if (Math.abs(deltaX) > Math.abs(deltaY)) {
         if (deltaX > 0) {
-            onSwipeLeft();
+            if (myOrien == 'll') {
+                onSwipeDown();
+            } else if (myOrien == 'ud') {
+                onSwipeRight();
+            } else if (myOrien == 'lr') {
+                onSwipeUp();
+            } else {
+                onSwipeLeft();
+            }
             resetDwonXY();
         } else {
-            onSwipeRight();
+            if (myOrien == 'll') {
+                onSwipeUp();
+            } else if (myOrien == 'ud') {
+                onSwipeLeft();
+            } else if (myOrien == 'lr') {
+                onSwipeDown();
+            } else {
+                onSwipeRight();
+            }
             resetDwonXY();
         }
     } else if (Math.abs(deltaX) < Math.abs(deltaY)) {
         if (deltaY > 0) {
-            onSwipeUp();
+            if (myOrien == 'll') {
+                onSwipeLeft();
+            } else if (myOrien == 'ud') {
+                onSwipeDown();
+            } else if (myOrien == 'lr') {
+                onSwipeRight();
+            } else {
+                onSwipeUp();
+            }
             resetDwonXY();
         } else {
-            onSwipeDown();
+            if (myOrien == 'll') {
+                onSwipeRight();
+            } else if (myOrien == 'ud') {
+                onSwipeUp();
+            } else if (myOrien == 'lr') {
+                onSwipeLeft();
+            } else {
+                onSwipeDown();
+            }
             resetDwonXY();
         }
     }
@@ -251,6 +284,25 @@ function resumeVideoAudio() {
 
     video.play();
     audio.play();
+}
+
+function onCurrentOrientation(orientation) {
+    log(orientation);
+    var e = document.getElementById('portrait-ad');
+    if (orientation == 'PortraitUpsideDown') {
+        myOrien = 'ud';
+        e.setAttribute("class", "upside-down");
+    } else if (orientation == 'LandscapeLeft') {
+        myOrien = 'll';
+        e.setAttribute("class", "landscape-left");
+    } else if (orientation == 'LandscapeRight') {
+        myOrien = 'lr';
+        e.setAttribute("class", "landscape-right");
+    } else {
+        myOrien = 'p';
+        e.setAttribute("class", "portrait");
+    }
+    log(myOrien);
 }
 
 function log(msg) {

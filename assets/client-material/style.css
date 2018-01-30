@@ -84,13 +84,13 @@
   right: 2vmin;
 }
 
-div#landscape-ad[class='portrait'] {
+div#portrait-ad[class='portrait'] {
   width: 100vw;
   height: 100vh;
   background: red;
 }
 
-div#landscape-ad[class='landscape-left'] {
+div#portrait-ad[class='landscape-left'] {
   width: 100vh;
   height: 100vw;
   -webkit-transform-origin: top left;
@@ -100,7 +100,7 @@ div#landscape-ad[class='landscape-left'] {
   transform: rotate(90deg);
 }
 
-div#landscape-ad[class='landscape-right'] {
+div#portrait-ad[class='landscape-right'] {
   width: 100vh;
   height: 100vw;
   -webkit-transform-origin: top left;
@@ -110,7 +110,7 @@ div#landscape-ad[class='landscape-right'] {
   transform: rotate(-90deg);
 }
 
-div#landscape-ad[class='upside-down'] {
+div#portrait-ad[class='upside-down'] {
   width: 100vw;
   height: 100vh;
   -webkit-transform: rotate(180deg);
