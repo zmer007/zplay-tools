@@ -45,6 +45,8 @@ function exportFiles(outputDir, profileData, videoPath) {
     playpageFile = playpageFile.replace('bgm-src-holder', bgmName);
     playpageFile = playpageFile.replace('video-class-holder', isPortrait ? 'portrait-video' : 'landscape-video')
     playpageFile = playpageFile.replace('video-src-holder', playName)
+    playpageFile = playpageFile.replace('video-poster-holder', posterName)
+
 
     landpageFile = landpageFile.replace(/ad-style-holder/g, isPortrait ? 'portrait-ad' : 'landscape-ad');
     landpageFile = landpageFile.replace('background-img-src-holder', posterName)
@@ -62,7 +64,7 @@ function exportFiles(outputDir, profileData, videoPath) {
     fs.copySync(path.resolve(__dirname, '../assets/client-material/close.png'), outputDir + '/close.png');
     fs.copySync(path.resolve(__dirname, '../assets/client-material/download.png'), outputDir + '/download.png');
     fs.copySync(path.resolve(__dirname, '../assets/client-material/style.css'), outputDir + '/style.css');
-    
+
     fs.copySync(videoDir + '/' + videoName + '.mp4', outputDir + '/' + playName)
     fs.copySync(videoDir + '/' + videoName + '.mp3', outputDir + '/' + bgmName)
     fs.copySync(videoDir + '/' + videoName + '.jpg', outputDir + '/' + posterName)

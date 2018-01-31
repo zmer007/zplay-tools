@@ -11,10 +11,9 @@
 }
 
 #info {
-  display: none;
-  font-size: 1em;
-  color: #000000;
-  background: #ffffff;
+  font-size: 2em;
+  color: white;
+  background: grey;
   z-index: 1000;
 }
 
@@ -25,33 +24,24 @@
 }
 
 .landscape-video {
-  width: 100vh;
-  height: 100vw;
-  margin-top: -100vw;
-  -webkit-transform-origin: bottom left;
-  transform-origin: bottom left;
-  -webkit-transform: rotate(90deg);
-  transform: rotate(90deg);
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: blue;
   z-index: 0;
 }
 
 .landscape-download {
-  width: 50vmax;
-  height: 20vmax;
-  margin-top: 8vmax;
-  margin-left: 1vmax;
-  border-color: red;
-  -webkit-transform-origin: bottom left;
-  transform-origin: bottom left;
-  -webkit-transform: rotate(90deg);
-  transform: rotate(90deg);
+  width: 45vmax;
+  height: 25vmin;
+  margin-left: 25vmax;
+  margin-top: 75vmin;
   z-index: 0;
 }
 
 .download-img {
-  width: 95%;
+  width: 100%;
   height: auto;
-  margin-top: 4vmax;
   animation: scale-animal 2s;
   animation-iteration-count: infinite;
 }
@@ -59,8 +49,7 @@
 .landscape-close {
   width: 14vmin;
   height: 14vmin;
-  right: 2vmin;
-  bottom: 3vmin;
+  margin: 2vmin;
 }
 
 .portrait-video {
@@ -117,6 +106,37 @@ div#portrait-ad[class='upside-down'] {
   transform: rotate(180deg);
 }
 
+div#landscape-ad[class='portrait'] {
+  width: 100vh;
+  height: 100vw;
+  background: red;
+  -webkit-transform-origin: top left;
+  transform-origin: top left;
+  margin-left: 100vw;
+  -webkit-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+
+div#landscape-ad[class='landscape-left'] {
+  width: 100vw;
+  height: 100vh;
+  background: green;
+}
+
+div#landscape-ad[class='landscape-right'] {
+  width: 100vw;
+  height: 100vh;
+  background: green;
+}
+
+div#landscape-ad[class='upside-down'] {
+  width: 100vh;
+  height: 100vw;
+  background: red;
+  -webkit-transform: rotate(-90deg);
+  transform: rotate(-90deg);
+}
+
 @keyframes scale-animal {
   0% {
     transform: scale(1);
@@ -129,22 +149,7 @@ div#portrait-ad[class='upside-down'] {
   }
 }
 
-@-moz-keyframes scale-animal
-{
-  0% {
-    transform: scale(1);
-    
-  }
-  50% {
-    transform: scale(1.1);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
-@-webkit-keyframes scale-animal
-{
+@-moz-keyframes scale-animal {
   0% {
     transform: scale(1);
   }
@@ -156,8 +161,19 @@ div#portrait-ad[class='upside-down'] {
   }
 }
 
-@-o-keyframes scale-animal
-{
+@-webkit-keyframes scale-animal {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@-o-keyframes scale-animal {
   0% {
     transform: scale(1);
   }
