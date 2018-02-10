@@ -8,7 +8,6 @@ var guides = null;
 var cursor = null;
 var actionAble = false;
 
-var infoText = null;
 var myOrien = null;
 
 var vmax = 0;
@@ -17,7 +16,6 @@ var vmin = 0;
 document.addEventListener("DOMContentLoaded", function (event) {
 
     gestureLayer = document.getElementById("gesture-layer");
-    infoText = document.getElementById('info');
 
     gestureLayer.addEventListener('mousedown', onDown);
     gestureLayer.addEventListener('mousemove', onMove);
@@ -113,41 +111,31 @@ function refreshFrame() {
 }
 
 function onClicked() {
-    log('onClicked: NO')
     if (actionAble && !cursor.passed && cursor.event[0].action[4]) {
-        log('onClicked: YES')
         passCursor();
     }
 }
 
 function onSwipeLeft() {
-    log('onSwipeLeft: NO');
     if (actionAble && !cursor.passed && cursor.event[0].action[3]) {
-        log('onSwipeLeft: YES');
         passCursor();
     }
 }
 
 function onSwipeUp() {
-    log('onSwipeUp: NO');
     if (actionAble && !cursor.passed && cursor.event[0].action[1]) {
-        log('onSwipeUp: YES');
         passCursor();
     }
 }
 
 function onSwipeRight() {
-    log('onSwipeRight: NO');
     if (actionAble && !cursor.passed && cursor.event[0].action[5]) {
-        log('onSwipeRight: YES');
         passCursor();
     }
 }
 
 function onSwipeDown() {
-    log('onSwipeDown: NO');
     if (actionAble && !cursor.passed && cursor.event[0].action[7]) {
-        log('onSwipeDown: YES');
         passCursor();
     }
 }
@@ -162,7 +150,6 @@ function onDown(e) {
     var tc = transformCoor(e.clientX, e.clientY);
     downX = tc[0];
     downY = tc[1];
-    log(downX + ":" + downY);
 
     if (!cursor) return;
 
@@ -281,27 +268,23 @@ function transformCoor(x, y) {
 }
 function updateOrientation() {
     rotateScene(window.orientation);
-    console.log(window.orientation)
 }
 
 function rotateScene(orientation) {
-    var e = document.getElementById('landscape-ad');
+    var e = document.getElementById('ad-style-holder');
     if (orientation == 180) {
+        myOrien = 'ud';
         e.setAttribute("class", "upside-down");
     } else if (orientation == -90) {
+        myOrien = 'll';
         e.setAttribute("class", "landscape-left");
     } else if (orientation == 90) {
+        myOrien = 'lr';
         e.setAttribute("class", "landscape-right");
     } else {
+        myOrien = 'p';
         e.setAttribute("class", "portrait");
     }
-}
-
-function log(msg) {
-    if (!infoText) {
-        infoText = document.getElementById('info');
-    }
-    infoText.innerHTML = msg;
 }
 
 window.onorientationchange = updateOrientation;

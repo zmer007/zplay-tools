@@ -22,11 +22,10 @@
 
         function updateOrientation() {
             rotateScene(window.orientation);
-            console.log(window.orientation)
         }
 
         function rotateScene(orientation) {
-            var e = document.getElementById('landscape-ad');
+            var e = document.getElementById('ad-style-holder');
             if (orientation == 180) {
                 e.setAttribute("class", "upside-down");
             } else if (orientation == -90) {
