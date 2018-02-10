@@ -11,6 +11,9 @@ var actionAble = false;
 var infoText = null;
 var myOrien = null;
 
+var vmax = 0;
+var vmin = 0;
+
 document.addEventListener("DOMContentLoaded", function (event) {
 
     gestureLayer = document.getElementById("gesture-layer");
@@ -30,11 +33,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
         // 不全用durationchange监听方法，因为在Android 4.4（vivo）手机上会执行两次，第一次video duration为100，第二次正常值。
         // 为避免以后出现类似的问题，使用loadstart监听，并在配置文件中携带videoDuration值。
         guides = data.ctrl;
-        if (data.screenOrientation == 'landscape') {
-            video.className = 'landscape-video';
-        } else {
-            video.className = 'portrait-video';
-        }
 
         restoreData(window.screen.width, window.screen.height, data.videoDuration)
 
@@ -48,7 +46,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
     })
 
     video.oncanplay = function () {
-        log('canplay');
         if ("undefined" != typeof webkit) {
             // iOS
             webkit.messageHandlers.video.postMessage('video_did_end_loading');
@@ -68,18 +65,12 @@ document.addEventListener("DOMContentLoaded", function (event) {
 function restoreData(screenWidth, screenHeight, videoDuration) {
     if (videoDuration == Infinity || !guides) return;
 
-    if (myOrien == 'p' || myOrien == 'ud') {
-        if (screenWidth > screenHeight) {
-            var swape = screenHeight;
-            screenHeight = screenWidth;
-            screenWidth = swape;
-        }
+    if (screenHeight < screenWidth) {
+        vmin = screenHeight;
+        vmax = screenWidth;
     } else {
-        if (screenWidth < screenHeight) {
-            var swape = screenHeight;
-            screenHeight = screenWidth;
-            screenWidth = swape;
-        }
+        vmin = screenWidth;
+        vmax = screenHeight;
     }
 
     for (var i = 0; i < guides.length; i++) {
@@ -87,10 +78,10 @@ function restoreData(screenWidth, screenHeight, videoDuration) {
         csr.span.start *= videoDuration;
         csr.span.loopStart *= videoDuration;
         csr.span.end *= videoDuration;
-        csr.event[0].block[0] *= screenWidth;
-        csr.event[0].block[1] *= screenHeight;
-        csr.event[0].block[2] *= screenWidth;
-        csr.event[0].block[3] *= screenHeight;
+        csr.event[0].block[0] *= vmin;
+        csr.event[0].block[1] *= vmax;
+        csr.event[0].block[2] *= vmin;
+        csr.event[0].block[3] *= vmax;
         csr.passed = false;
     }
 }
@@ -168,8 +159,10 @@ function passCursor() {
 }
 
 function onDown(e) {
-    downX = e.clientX;
-    downY = e.clientY;
+    var tc = transformCoor(e.clientX, e.clientY);
+    downX = tc[0];
+    downY = tc[1];
+    log(downX + ":" + downY);
 
     if (!cursor) return;
 
@@ -185,59 +178,28 @@ function onMove(e) {
     if (!downX || !downY) {
         return;
     }
-
-    var upX = e.clientX;
-    var upY = e.clientY;
+    var tc = transformCoor(e.clientX, e.clientY);
+    var upX = tc[0];
+    var upY = tc[1];
 
     var deltaX = downX - upX;
     var deltaY = downY - upY;
 
     if (Math.abs(deltaX) > Math.abs(deltaY)) {
         if (deltaX > 0) {
-            if (myOrien == 'll') {
-                onSwipeDown();
-            } else if (myOrien == 'ud') {
-                onSwipeRight();
-            } else if (myOrien == 'lr') {
-                onSwipeUp();
-            } else {
-                onSwipeLeft();
-            }
+            onSwipeLeft();
             resetDwonXY();
         } else {
-            if (myOrien == 'll') {
-                onSwipeUp();
-            } else if (myOrien == 'ud') {
-                onSwipeLeft();
-            } else if (myOrien == 'lr') {
-                onSwipeDown();
-            } else {
-                onSwipeRight();
-            }
+
+            onSwipeRight();
             resetDwonXY();
         }
     } else if (Math.abs(deltaX) < Math.abs(deltaY)) {
         if (deltaY > 0) {
-            if (myOrien == 'll') {
-                onSwipeLeft();
-            } else if (myOrien == 'ud') {
-                onSwipeDown();
-            } else if (myOrien == 'lr') {
-                onSwipeRight();
-            } else {
-                onSwipeUp();
-            }
+            onSwipeUp();
             resetDwonXY();
         } else {
-            if (myOrien == 'll') {
-                onSwipeRight();
-            } else if (myOrien == 'ud') {
-                onSwipeUp();
-            } else if (myOrien == 'lr') {
-                onSwipeLeft();
-            } else {
-                onSwipeDown();
-            }
+            onSwipeDown();
             resetDwonXY();
         }
     }
@@ -246,6 +208,9 @@ function onMove(e) {
 function onUp(e) {
     var upX = e.clientX;
     var upY = e.clientY;
+    var tc = transformCoor(e.clientX, e.clientY);
+    upX = tc[0];
+    upY = tc[1];
     if (upX == downX && upY == downY) {
         onClicked();
     }
@@ -297,28 +262,46 @@ function resumeVideoAudio() {
     audio.play();
 }
 
-function onCurrentOrientation(orientation) {
-    log(orientation);
-    var e = document.getElementById('ad-style-holder');
-    if (orientation == 'PortraitUpsideDown') {
-        myOrien = 'ud';
+function transformCoor(x, y) {
+    var coor = [];
+    if (myOrien == 'lr') {
+        coor[0] = vmin - y;
+        coor[1] = x;
+    } else if (myOrien == 'll') {
+        coor[0] = y;
+        coor[1] = vmax - x;
+    } else if(myOrien == 'ud'){
+        coor[0] = vmin - x;
+        coor[1] = vmax - y;
+    }else{
+        coor[0] = x;
+        coor[1] = y;
+    }
+    return coor;
+}
+function updateOrientation() {
+    rotateScene(window.orientation);
+    console.log(window.orientation)
+}
+
+function rotateScene(orientation) {
+    var e = document.getElementById('landscape-ad');
+    if (orientation == 180) {
         e.setAttribute("class", "upside-down");
-    } else if (orientation == 'LandscapeLeft') {
-        myOrien = 'll';
+    } else if (orientation == -90) {
         e.setAttribute("class", "landscape-left");
-    } else if (orientation == 'LandscapeRight') {
-        myOrien = 'lr';
+    } else if (orientation == 90) {
         e.setAttribute("class", "landscape-right");
     } else {
-        myOrien = 'p';
         e.setAttribute("class", "portrait");
     }
-    log(myOrien);
 }
 
 function log(msg) {
-    // if (!infoText) {
-    //     infoText = document.getElementById('info');
-    // }
-    // infoText.innerHTML = msg;
+    if (!infoText) {
+        infoText = document.getElementById('info');
+    }
+    infoText.innerHTML = msg;
 }
+
+window.onorientationchange = updateOrientation;

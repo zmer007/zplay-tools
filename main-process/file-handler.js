@@ -43,14 +43,12 @@ function exportFiles(outputDir, profileData, videoPath) {
 
     playpageFile = playpageFile.replace('ad-style-holder', isPortrait ? 'portrait-ad' : 'landscape-ad');
     playpageFile = playpageFile.replace('bgm-src-holder', bgmName);
-    playpageFile = playpageFile.replace('video-class-holder', isPortrait ? 'portrait-video' : 'landscape-video')
     playpageFile = playpageFile.replace('video-src-holder', playName)
     playpageFile = playpageFile.replace('video-poster-holder', posterName)
 
 
     landpageFile = landpageFile.replace(/ad-style-holder/g, isPortrait ? 'portrait-ad' : 'landscape-ad');
     landpageFile = landpageFile.replace('background-img-src-holder', posterName)
-    landpageFile = landpageFile.replace('background-img-class-holder', isPortrait ? 'portrait-video' : 'landscape-video')
     landpageFile = landpageFile.replace('download-btn-class-holder', isPortrait ? 'portrait-download' : 'landscape-download')
     landpageFile = landpageFile.replace('close-btn-class-holder', isPortrait ? 'portrait-close' : 'landscape-close')
 

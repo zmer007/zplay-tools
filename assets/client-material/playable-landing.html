@@ -4,28 +4,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
     <div id="ad-style-holder">
-        <img src="background-img-src-holder" class="background-img-class-holder">
+        <img class="match-parent" src="background-img-src-holder">
         <div class="download-btn-class-holder">
-            <img onclick="sendInstallEvent()" class="download-img" src="download.png">
+            <img class="download-img" onclick="sendInstallEvent()" src="download.png">
         </div>
-        <img onclick="sendCloseEvent()" src="close.png" class="close-btn-class-holder">
+        <img class="close-btn-class-holder" onclick="sendCloseEvent()" src="close.png">
     </div>
 
     <script>
-        function onCurrentOrientation(orientation) {
-            var e = document.getElementById('ad-style-holder');
-            if (orientation == 'PortraitUpsideDown') {
+        updateOrientation()
+
+        function updateOrientation() {
+            rotateScene(window.orientation);
+            console.log(window.orientation)
+        }
+
+        function rotateScene(orientation) {
+            var e = document.getElementById('landscape-ad');
+            if (orientation == 180) {
                 e.setAttribute("class", "upside-down");
-            } else if (orientation == 'LandscapeLeft') {
+            } else if (orientation == -90) {
                 e.setAttribute("class", "landscape-left");
-            } else if (orientation == 'LandscapeRight') {
+            } else if (orientation == 90) {
                 e.setAttribute("class", "landscape-right");
             } else {
                 e.setAttribute("class", "portrait");
@@ -51,6 +57,8 @@
                 window.PlayableAds.goInstallApp();
             }
         }
+
+        window.onorientationchange = updateOrientation;
     </script>
 </body>
 

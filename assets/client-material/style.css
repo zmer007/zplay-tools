@@ -23,14 +23,6 @@
   background: black;
 }
 
-.landscape-video {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: blue;
-  z-index: 0;
-}
-
 .landscape-download {
   width: 45vmax;
   height: 25vmin;
@@ -52,11 +44,11 @@
   margin: 2vmin;
 }
 
-.portrait-video {
+.match-parent {
   position: absolute;
   width: 100%;
   height: 100%;
-  pointer-events: none;
+  z-index: 0;
 }
 
 .portrait-download {
@@ -76,7 +68,6 @@
 div#portrait-ad[class='portrait'] {
   width: 100vw;
   height: 100vh;
-  background: red;
 }
 
 div#portrait-ad[class='landscape-left'] {
@@ -109,7 +100,6 @@ div#portrait-ad[class='upside-down'] {
 div#landscape-ad[class='portrait'] {
   width: 100vh;
   height: 100vw;
-  background: red;
   -webkit-transform-origin: top left;
   transform-origin: top left;
   margin-left: 100vw;
@@ -120,19 +110,18 @@ div#landscape-ad[class='portrait'] {
 div#landscape-ad[class='landscape-left'] {
   width: 100vw;
   height: 100vh;
-  background: green;
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
 }
 
 div#landscape-ad[class='landscape-right'] {
   width: 100vw;
   height: 100vh;
-  background: green;
 }
 
 div#landscape-ad[class='upside-down'] {
   width: 100vh;
   height: 100vw;
-  background: red;
   -webkit-transform: rotate(-90deg);
   transform: rotate(-90deg);
 }
